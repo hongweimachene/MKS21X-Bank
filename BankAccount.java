@@ -13,12 +13,8 @@ public class BankAccount{
   public int getaccountID() {
     return accountID;
   }
-  public String getPassword() {
-    return password;
-  }
-  public boolean setPassword(String newPass) {
+  public void setPassword(String newPass) {
     password = newPass;
-    return true;
   }
   public String toString() {
     return accountID + "\t" + balance;
@@ -36,5 +32,17 @@ public class BankAccount{
       return true;
     }
     return false;
+  }
+  private boolean authenticate(String password){
+    return this.password == password;
+  }
+  public boolean transferTo(BankAccount other, double amount, String password) {
+    if (this.authenticate(password) && amount > 0 && amount < this.getBalance()) {
+      this.withdraw(amount);
+      other.deposit(amount);
+      return true;
+    } else {
+      return false;
+    }
   }
 }
